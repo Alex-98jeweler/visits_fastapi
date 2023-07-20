@@ -1,6 +1,4 @@
 from fastapi import APIRouter, Depends
-from fastapi.responses import Response
-from fastapi import status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .utils import from_timestamp_to_datetime, build_response_body

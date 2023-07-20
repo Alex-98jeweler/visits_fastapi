@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from sqlalchemy import select, insert, Column, String
+from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .utils import get_urls_list
