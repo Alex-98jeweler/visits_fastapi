@@ -14,5 +14,4 @@ async def visited_links(
     visited_links: VisitedLinks,
     session: AsyncSession = Depends(get_async_session)
 ):
-    print(visited_links)
     return {"Hi hi": "ha ha"}
