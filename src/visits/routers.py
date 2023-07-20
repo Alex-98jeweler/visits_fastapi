@@ -1,4 +1,3 @@
-from typing import List
 from fastapi import APIRouter, Depends
 from fastapi.responses import Response
 from fastapi import status
@@ -8,7 +7,6 @@ from .utils import from_timestamp_to_datetime
 from .schemas import VisitedLinks
 from . import crud_db
 from src.database import get_async_session
-
 
 
 router = APIRouter()
@@ -24,10 +22,10 @@ async def visited_links(
         await crud_db.create_visit(links, session)
     except Exception as e:
         return Response({
-            'status': 'error', 
+            'status': 'error',
             'message': str(e)
-            }, 
-        status_code=status.HTTP_200_OK
+            },
+            status_code=status.HTTP_200_OK
         )
     return {"status": "success"}
 

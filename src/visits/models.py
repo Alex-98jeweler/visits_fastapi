@@ -1,4 +1,3 @@
-from datetime import datetime
 from sqlalchemy import MetaData, Table, Column, Integer, String, DateTime
 from sqlalchemy.sql import func
 

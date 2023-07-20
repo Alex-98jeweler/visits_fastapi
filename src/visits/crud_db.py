@@ -14,8 +14,10 @@ async def get_domains(
 ):
 
     query = select(visit)
-    if from_: query = query.where(visit.c.visited_at >= from_)
-    if to: query = query.where(visit.c.visited_at <= to)
+    if from_:
+        query = query.where(visit.c.visited_at >= from_)
+    if to:
+        query = query.where(visit.c.visited_at <= to)
     result = await session.execute(query.distinct())
     return result.fetchall()
 
@@ -28,5 +30,3 @@ async def create_visit(
         query = insert(visit).values(link=link.__str__())
         await session.execute(query)
     await session.commit()
-
-    

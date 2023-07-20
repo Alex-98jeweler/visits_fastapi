@@ -1,5 +1,5 @@
 from typing import List
-from pydantic import BaseModel, field_validator, HttpUrl
+from pydantic import BaseModel, HttpUrl
 
 
 class VisitedLinks(BaseModel):

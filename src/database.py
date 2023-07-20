@@ -17,6 +17,7 @@ async_sessionmaker = sessionmaker(
 
 )
 
+
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_sessionmaker() as session:
         yield session
