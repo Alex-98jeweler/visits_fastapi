@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any
+from typing import Any, List
 from .schemas import CommonResponses, Statuses
 
 def from_timestamp_to_datetime(
@@ -24,3 +24,8 @@ def build_response_body(
     response = CommonResponses.parse_obj(response_dict)
     return response
 
+def get_urls_list(db_sequence) -> List[str]:
+    result = []
+    for row in db_sequence:
+        result.append(row[-1])
+    return result

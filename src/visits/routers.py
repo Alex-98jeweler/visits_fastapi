@@ -33,5 +33,5 @@ async def visited_domains(
 ):
     from_dt = from_timestamp_to_datetime(from_)
     to_dt = from_timestamp_to_datetime(to)
-    await crud_db.get_domains(session, from_dt, to_dt)
-    return {}
+    result = await crud_db.get_domains(session, from_dt, to_dt)
+    return build_response_body(is_success=True, data=result)
