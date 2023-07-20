@@ -3,8 +3,8 @@ from fastapi.responses import Response
 from fastapi import status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .utils import from_timestamp_to_datetime
-from .schemas import VisitedLinks
+from .utils import from_timestamp_to_datetime, build_response_body
+from .schemas import CommonResponses, VisitedLinks
 from . import crud_db
 from src.database import get_async_session
 
@@ -12,7 +12,7 @@ from src.database import get_async_session
 router = APIRouter()
 
 
-@router.post('/visited_links')
+@router.post('/visited_links', response_model=CommonResponses)
 async def visited_links(
     visited_links: VisitedLinks,
     session: AsyncSession = Depends(get_async_session)
@@ -21,13 +21,8 @@ async def visited_links(
     try:
         await crud_db.create_visit(links, session)
     except Exception as e:
-        return Response({
-            'status': 'error',
-            'message': str(e)
-            },
-            status_code=status.HTTP_200_OK
-        )
-    return {"status": "success"}
+        return build_response_body(False, str(e))
+    return build_response_body(True, 'success')
 
 
 @router.get('/visited_domains',)
