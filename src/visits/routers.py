@@ -5,7 +5,7 @@ from aioredis.client import Redis
 from . import crud_db
 from src.redis_instance import get_redis_conn
 from src.database import get_async_session
-from .storage import test_redis
+from . import storage
 from .schemas import CommonResponses, VisitedLinks
 from .utils import from_timestamp_to_datetime, build_response_body
 
@@ -16,29 +16,27 @@ router = APIRouter()
 @router.post('/visited_links', response_model=CommonResponses)
 async def visited_links(
     visited_links: VisitedLinks,
-    session: AsyncSession = Depends(get_async_session)
+    redis: AsyncSession = Depends(get_redis_conn)
 ):
-    links = visited_links.links
     try:
-        await crud_db.create_visit(links, session)
+        await storage.add_links(redis, visited_links)
+        response = build_response_body(is_success=True, message ='success')
     except Exception as e:
-        return build_response_body(False, str(e))
-    return build_response_body(True, 'success')
+        message = str(e)
+        return build_response_body(False, message)
+    return response
 
 
 @router.get('/visited_domains', response_model=CommonResponses)
 async def visited_domains(
-    from_: int = None,
-    to: int = None,
-    session: AsyncSession = Depends(get_async_session)
+    from_: float = None,
+    to: float = None,
+    redis: Redis = Depends(get_redis_conn)
 ):
-    from_dt = from_timestamp_to_datetime(from_)
-    to_dt = from_timestamp_to_datetime(to)
-    result = await crud_db.get_domains(session, from_dt, to_dt)
-    return build_response_body(is_success=True, data=result)
-
-
-@router.get("/test")
-async def testing(redis: Redis = Depends(get_redis_conn)):
-    await test_redis(redis)
-    return{"success": "True"}
+    try:
+        domains = await storage.get_domains(redis, from_, to)
+        response = build_response_body(is_success=True, message='success', data=domains)
+    except Exception as e:
+        message = str(e)
+        return build_response_body(False, message)
+    return response
