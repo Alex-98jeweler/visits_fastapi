@@ -25,7 +25,7 @@ def build_response_body(
         response_dict['status'] = Statuses.error
     response_dict['message'] = message
     response_dict['data'] = data
-    response = CommonResponses.parse_obj(response_dict)
+    response = CommonResponses.model_validate(response_dict)
     return response
 
 
