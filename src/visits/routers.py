@@ -23,7 +23,7 @@ async def visited_links(
     return build_response_body(True, 'success')
 
 
-@router.get('/visited_domains',)
+@router.get('/visited_domains', response_model=CommonResponses)
 async def visited_domains(
     from_: int = None,
     to: int = None,
