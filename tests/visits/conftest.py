@@ -12,7 +12,6 @@ from src.redis_instance import get_redis_conn
 from src.config import REDIS_URL_TEST
 
 
-
 redis = aioredis.from_url(REDIS_URL_TEST)
 
 
@@ -31,7 +30,9 @@ def event_loop(request):
     yield loop
     loop.close()
 
+
 client = TestClient(app)
+
 
 @pytest.fixture(scope="session")
 async def ac() -> AsyncGenerator[AsyncClient, None]:

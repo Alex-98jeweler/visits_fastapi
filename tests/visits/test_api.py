@@ -1,18 +1,23 @@
 from datetime import datetime
-import pytest
-from fastapi.testclient import TestClient
-from httpx import AsyncClient
 
-from src.main import app
+from httpx import AsyncClient
 
 
 async def test_success_resposne(ac: AsyncClient):
     links = {
-        'links': ['https://example1.com', 'https://example2.com', 'https://example3.com']
+        'links': [
+            'https://example1.com',
+            'https://example2.com',
+            'https://example3.com'
+        ]
     }
     response = await ac.post('/visited_links', json=links)
     assert response.status_code == 200
-    assert response.json() == {"status": "success", "message": "success", "data": []}
+    assert response.json() == {
+        "status": "success",
+        "message": "success",
+        "data": []
+    }
 
 
 async def test_validation_error_response(ac: AsyncClient):

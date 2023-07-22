@@ -1,18 +1,13 @@
-from datetime import datetime
 import json
-import random
-from uuid import uuid4
 
-from fastapi import Depends
 from aioredis.client import Redis
 
-from src.redis_instance import get_redis_conn
 from src.visits.utils import filter_list, prepare_list
 from .schemas import VisitedLinks
 
 
 async def add_links(
-    redis_client: Redis, 
+    redis_client: Redis,
     visited_links: VisitedLinks
 ):
     links = visited_links.links
@@ -34,4 +29,3 @@ async def get_domains(
     buf = filter_list(links, from_, to)
     result = [link['link'] for link in buf]
     return result
-    
