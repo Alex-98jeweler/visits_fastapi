@@ -12,4 +12,4 @@ DB_PORT = os.environ.get("DB_PORT", '5432')
 
 
 REDIS_URL = os.environ.get("REDIS_URL", 'redis://localhost/1')
-REDIS_URL_TEST = os.environ.get("REDIS_URL_TEST", 'redis://localhost:8023/2')
+REDIS_URL_TEST = os.environ.get("REDIS_URL_TEST", 'redis://localhost/15')
