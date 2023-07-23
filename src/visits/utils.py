@@ -48,7 +48,6 @@ def prepare_list(links: List[str], src: List):
 
 
 def filter_list(links_list: list, from_, to):
-    buf = links_list[::]
     for link in links_list:
         if from_ and link['visited_at'] < from_:
             links_list.remove(link)
