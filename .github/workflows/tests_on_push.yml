@@ -1,0 +1,28 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      ["master"]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Redis
+        env:
+          REDIS_TEST_URL: redis://redis:6379/15
+      - name: Run tests
+          uses: actions/setup-python@v4
+          with:
+            python-version: 3.8
+          run: |
+            pip install --no-cache -r requirements.txt
+            pytest -v 
+
+    
