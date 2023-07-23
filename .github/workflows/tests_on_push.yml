@@ -27,6 +27,6 @@ jobs:
           pip install --no-cache -r requirements.txt
           pytest -v 
         env:
-          REDIS_URL_TEST: redis://redis:6379/15
+          REDIS_URL_TEST: redis://localhost:6379/15
 
     
