@@ -11,7 +11,7 @@ services:
     build:
       context: .
     env_file:
-      - .env
+      - .env-docker
     container_name: fastapi_app
     command: ["/docker/app.sh"]
     ports:
