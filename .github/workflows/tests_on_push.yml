@@ -14,9 +14,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run Redis
-        env:
-          REDIS_TEST_URL: redis://redis:6379/15
       - name: Run tests
         uses: actions/setup-python@v4
         with:
@@ -24,5 +21,7 @@ jobs:
         run: |
           pip install --no-cache -r requirements.txt
           pytest -v 
+        env:
+          REDIS_TEST_URL: redis://redis:6379/15
 
     
