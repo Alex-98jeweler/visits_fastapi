@@ -8,9 +8,6 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    services:
-      redis:
-        image: redis
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -18,11 +15,19 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8
+      - name: Run daemonize redis
+        run: |
+          apt install lsb-release curl gpg
+          curl -fsSL https://packages.redis.io/gpg | gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/redis.list
+          apt-get update
+          apt-get install redis
+          redis-server --daemonize yes
       - name: Run tests
         run: |
           pip install --no-cache -r requirements.txt
           pytest -v 
         env:
-          REDIS_URL_TEST: redis://6379/15
+          REDIS_URL_TEST: redis://redis:6379/15
 
     
